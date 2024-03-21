@@ -9,7 +9,6 @@ async function getAllMovies(){
     .then(data => {
         console.log(data);
         displayMovies(data);
-        // Faça o que você quiser com os dados aqui
     })
     .catch(error => {
         console.error('Houve um erro:', error);
@@ -29,6 +28,8 @@ function displayMovies(data){
         let img = document.createElement('img');
         img.classList.add('card-img-top');
         img.src = movie.image;
+        img.style.marginTop = '10px';
+        
 
         let cardBody = document.createElement('div');
         cardBody.classList.add('card-body');
@@ -52,7 +53,6 @@ function displayMovies(data){
 }
 
 function searchMovie(filmName) {
-    filmName = document.getElementById('search-input').value;
     
     fetch('https://ghibliapi.vercel.app/films')
         .then(response => {
@@ -65,10 +65,16 @@ function searchMovie(filmName) {
             const filteredMovies = data.filter(film => film.title.toLowerCase().includes(filmName.toLowerCase()));
             if (filteredMovies.length === 0) {
                 console.log('Nenhum filme encontrado com esse nome.');
+                const errorModal = new bootstrap.Modal(document.getElementById('error-modal'));
+                errorModal.show();
             } else {
                 displayMovies(filteredMovies);
             }
         })
+}
+
+function validateField() {
+    
 }
 
 document.addEventListener('DOMContentLoaded', getAllMovies);
