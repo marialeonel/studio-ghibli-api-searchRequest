@@ -53,7 +53,6 @@ function displayMovies(data){
 }
 
 function searchMovie(filmName) {
-    
     fetch('https://ghibliapi.vercel.app/films')
         .then(response => {
             if (!response.ok) {
@@ -73,7 +72,21 @@ function searchMovie(filmName) {
         })
 }
 
-function validateField() {
+function validateField(field) {
+    if (field.value.length < 3) {
+        //field.classList.remove('is-valid'); // Remover a classe is-valid se estiver presente
+        //field.classList.add('is-invalid');
+        toggleClass(field, 'is-valid', 'is-invalid');
+    } else {
+      //  field.classList.remove('is-invalid'); // Remover a classe is-invalid se estiver presente
+      //  field.classList.add('is-valid');
+        toggleClass(field, 'is-invalid', 'is-valid');
+    }
+}
+
+function toggleClass(field, removeClass, addClass) {
+    field.classList.remove(removeClass);
+    field.classList.add(addClass);
     
 }
 
