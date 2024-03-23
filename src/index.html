@@ -27,12 +27,13 @@
 
     <div class="container" id="search-place">
         <form class="needs-validation" novalidate>
-            <div class="input-group mb-3 is-invalid">
-              <div class="input-group-prepend">
+            <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="bi bi-search-heart"></i></span>
-              </div>
-                <input id="search-input" type="text" class="form-control" placeholder="Type a Studio Ghibli movie..." onchange="searchMovie(document.getElementById('search-input').value)">
-              </div>
+                <input id="search-input" type="text" class="form-control" placeholder="Type a Studio Ghibli movie..." oninput="validateInput(this.value)" onchange="searchMovie(this.value)">
+                <div id="error-message" class="invalid-feedback">
+                  
+                </div>
+            </div>
         </form>
     </div>
 
@@ -56,7 +57,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <p>Please, type an existent Studio Ghibli's movie.</p>
+              <p>Please, type the entire and EXACT title of a Studio Ghibli film.</p>
             </div>
           </div>
         </div>
