@@ -1,10 +1,8 @@
 .container {
-    margin-top: 50px;
+    margin-top: 30px;
     background-color: rgb(229, 229, 229);
     border-radius: 10px;
-    /* padding: 20px; */
     margin-bottom: 50px;
-    
 }
 
 #search-place {
@@ -24,15 +22,3 @@
 .card {
     margin: 20px;
 }
-
-.show {
-    display: flex;
-}
-
-.hide {
-    display: none;
-}
-
-/* i {
-    color: red;
-} */
