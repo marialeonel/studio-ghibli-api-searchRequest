@@ -1,3 +1,5 @@
+var allMoviesData = [];
+
 async function getAllMovies(){
     await fetch('https://ghibliapi.vercel.app/films')
     .then(response => {
@@ -7,6 +9,7 @@ async function getAllMovies(){
         return response.json();
     })
     .then(data => {
+        allMoviesData = data;
         console.log(data);
         displayMovies(data);
     })
@@ -53,41 +56,15 @@ function displayMovies(data){
 }
 
 function searchMovie(filmName) {
-    fetch('https://ghibliapi.vercel.app/films')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro ao carregar os dados');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const filteredMovies = data.filter(film => film.title.toLowerCase().includes(filmName.toLowerCase()));
-            if (filteredMovies.length === 0) {
-                console.log('Nenhum filme encontrado com esse nome.');
-                const errorModal = new bootstrap.Modal(document.getElementById('error-modal'));
-                errorModal.show();
-            } else {
-                displayMovies(filteredMovies);
-            }
-        })
-}
-
-function validateField(field) {
-    if (field.value.length < 3) {
-        //field.classList.remove('is-valid'); // Remover a classe is-valid se estiver presente
-        //field.classList.add('is-invalid');
-        toggleClass(field, 'is-valid', 'is-invalid');
+    const filteredMovies = allMoviesData.filter(film => film.title.toLowerCase().includes(filmName.toLowerCase()));
+    if (filteredMovies.length === 0) {
+        console.log('Nenhum filme encontrado com esse nome.');
+        const errorModal = new bootstrap.Modal(document.getElementById('error-modal'));
+        errorModal.show();
     } else {
-      //  field.classList.remove('is-invalid'); // Remover a classe is-invalid se estiver presente
-      //  field.classList.add('is-valid');
-        toggleClass(field, 'is-invalid', 'is-valid');
+        displayMovies(filteredMovies);
     }
 }
 
-function toggleClass(field, removeClass, addClass) {
-    field.classList.remove(removeClass);
-    field.classList.add(addClass);
-    
-}
 
 document.addEventListener('DOMContentLoaded', getAllMovies);
