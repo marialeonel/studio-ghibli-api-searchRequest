@@ -9,9 +9,8 @@ async function getAllMovies(){
         return response.json();
     })
     .then(data => {
-        allMoviesData = data;
-        console.log(data);
         displayMovies(data);
+        allMoviesData = data;
     })
     .catch(error => {
         console.error('Houve um erro:', error);
@@ -55,35 +54,47 @@ function displayMovies(data){
     })
 }
 
-async function searchMovie(filmName) {
-    await fetch(`https://ghibliapi.vercel.app/films?title=${filmName}`)
-    .then(response => {
-        if (!response.ok) {
-        throw new Error('Erro ao carregar os dados');
-        }
-        return response.json();
-    })
-    .then(data => {
-        const filteredMovies = data.filter(film => film.title.toLowerCase().includes(filmName.toLowerCase()));
-        console.log(filteredMovies)
+// async function searchMovie(filmName) {
+//     await fetch(`https://ghibliapi.vercel.app/films?title=${filmName}`)
+//     .then(response => {
+//         if (!response.ok) {
+//         throw new Error('Erro ao carregar os dados');
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         const filteredMovies = data.filter(film => film.title.toLowerCase().includes(filmName.toLowerCase()));
+//         console.log(filteredMovies)
+//     if (filteredMovies.length === 0) {
+//         const errorModal = new bootstrap.Modal(document.getElementById('error-modal'));
+//         errorModal.show();
+//         getAllMovies();
+//     } else {
+//         displayMovies(filteredMovies);
+//     }
+//     });
+    
+// }
+
+function searchMovie(filmName) {
+    const filteredMovies = allMoviesData.filter(film => film.title.toLowerCase().includes(filmName.toLowerCase()));
     if (filteredMovies.length === 0) {
+        console.log('Nenhum filme encontrado com esse nome.');
         const errorModal = new bootstrap.Modal(document.getElementById('error-modal'));
         errorModal.show();
-        getAllMovies();
     } else {
         displayMovies(filteredMovies);
     }
-    });
-    
 }
+
 
 function validateInput(value) {
     const searchInput = document.getElementById('search-input');
     const errorMessage = document.getElementById('error-message');
     
-    if (value.length < 5) {
+    if (value.length < 3) {
         searchInput.classList.add('is-invalid');
-        errorMessage.innerText = 'Please enter more than 5 characters as no film has less than that.';
+        errorMessage.innerText = 'Please enter more than 3 characters as no film has less than that.';
     } else {
         searchInput.classList.remove('is-invalid');
         errorMessage.innerText = '';
